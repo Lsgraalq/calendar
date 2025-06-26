@@ -1,12 +1,17 @@
 "use client"
 import { useEffect, useState } from "react";
-import LoginButton from "../../components/loginButton";
-import Navbar from "../../components/Navbar";
+import LoginButton from "../components/loginButton";
+import Navbar from "../components/Navbar";
 import { auth } from "../firebase/firebaseConfig";
 import { onAuthStateChanged } from 'firebase/auth';
 import Link from "next/link";
+import Calendar from '@/components/Calendar'
+
+
 
 export default function Home() {
+ 
+  
   const [user, setUser] = useState(null);
    onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -25,10 +30,9 @@ export default function Home() {
   
   return (
    <>
-   <Navbar></Navbar>
-   <div className="ml-64 pt-13">
-      <h1>asd</h1>
-      <LoginButton></LoginButton>
+   
+   <div className="md:ml-64 ml-10 pt-13">
+      <Calendar></Calendar>
       <div className="  w-60 px-10 pt-5 pb-5 rounded-full bg-amber-300">
         <Link href="http://localhost:3000/profile/eDjzjM1WmHZtk1Rxr0me6j1lBWN2">
           <h1>

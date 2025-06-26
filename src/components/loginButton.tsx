@@ -1,7 +1,7 @@
 // components/LoginButton.js
 "use client"
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "../src/firebase/firebaseConfig";
+import { auth } from "../firebase/firebaseConfig";
 import { createUserDocument } from "@/lib/createUserDocument"
 
 const provider = new GoogleAuthProvider();
