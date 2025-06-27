@@ -34,15 +34,15 @@ function Navbar() {
         router.push("/"); // редирект на главную
     };
 
-    if (loading) {
-    return (
-      <div className="absolute h-[100vh] z-[1000] bg-gray-800 min-w-full align-middle text-center">
-         <div className="relative top-[50%] text-3xl ">
-            Loading...
-         </div>
-      </div>
-    );
-  }
+//     if (loading) {
+//     return (
+//       <div className="absolute h-[100vh] z-[1000] bg-gray-800 min-w-full align-middle text-center">
+//          <div className="relative top-[50%] text-3xl ">
+//             Loading...
+//          </div>
+//       </div>
+//     );
+//   }
   if (error) {
     return (
       <div>
