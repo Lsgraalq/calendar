@@ -5,6 +5,8 @@ import Navbar from "@/components/Navbar";
 import { initAppCheck } from "@/firebase/appCheckInit";
 import { ClientLayout } from "./ClientLayout";
 
+
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -32,6 +34,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+
         <Navbar></Navbar>
         <ClientLayout>{children}</ClientLayout>
         <script src="../path/to/flowbite/dist/flowbite.min.js"></script>

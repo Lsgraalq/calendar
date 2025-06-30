@@ -7,7 +7,7 @@ import { useState, useRef, useEffect } from "react";
 import Link from 'next/link';
 import { useRouter } from "next/navigation";
 import LoginButton from './loginButton';
-
+import { FaUserAlt } from "react-icons/fa";
 
 function Navbar() {
     const [user, loading, error] = useAuthState(auth);
@@ -31,7 +31,7 @@ function Navbar() {
 
     const logout = async () => {
         await signOut(auth);
-        router.push("/"); // редирект на главную
+        router.push("/login"); // редирект на главную
     };
 
 //     if (loading) {
@@ -72,11 +72,11 @@ function Navbar() {
           <div className="flex items-center ms-3">
             <div>
              {/*  */}
-                <div className="justify-baseline flex gap-5"  >
-                    <div  className="cursor-pointer">
-                        {user.photoURL && <img src={user.photoURL} className='w-8 rounded-full' alt="." />}
+                <div className="justify-baseline flex gap-5 align-middle"  >
+                    <div  className="cursor-pointer align-middle">
+                        <FaUserAlt className='w-8 align-middle mt-1'/>
                     </div>
-                    <div className="text-lg pt-1">
+                    <div className="text-lg ">
                         <Link href={`/profile/${user.uid}`}>
                         <p>Profile</p>
                         </Link>

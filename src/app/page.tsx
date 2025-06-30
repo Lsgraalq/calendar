@@ -11,6 +11,10 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
+import { auth } from "../firebase/firebaseConfig";
+import { useAuthState } from 'react-firebase-hooks/auth';
+  import { useRouter } from "next/navigation";
+
 
 type Equipment = {
   id: string;
@@ -29,6 +33,8 @@ type Booking = {
 };
 
 export default function CalendarPage() {
+  const router = useRouter();
+  const [user, loading, error] = useAuthState(auth);
   const [date, setDate] = useState<Date>(new Date());
   const [equipmentList, setEquipmentList] = useState<Equipment[]>([]);
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -98,6 +104,12 @@ export default function CalendarPage() {
     }
     fetchBookings();
   }, [selectedEquipmentId]);
+
+  useEffect(() => {
+  if (!loading && !user) {
+    router.push("/login");
+  }
+}, [user, loading, router]);
 
   // Массив дат для подсветки
   const bookedDates = bookings.map((b) => {
@@ -184,6 +196,8 @@ export default function CalendarPage() {
     }
   }
   const selectedEquipment = equipmentList.find((eq) => eq.id === selectedEquipmentId);
+
+
   return (
     <div className="p-4 pt-20 w-screen pl-64">
       <div className="mx-auto w-full flex flex-row gap-20">
