@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "@/app/globals.css";
 import {
@@ -14,7 +13,8 @@ import { db } from "@/firebase/firebaseConfig";
 import { auth } from "../firebase/firebaseConfig";
 import { useAuthState } from 'react-firebase-hooks/auth';
   import { useRouter } from "next/navigation";
-
+import MyCalendar from "@/components/FullCalendar";
+import Link from "next/navigation";
 
 type Equipment = {
   id: string;
@@ -200,17 +200,15 @@ export default function CalendarPage() {
 
   return (
     <div className="p-4 pt-20 w-screen pl-64">
+     
       <div className="mx-auto w-full flex flex-row gap-20">
+         <a href="/calendar" className=""><h1 className="text-4xl">CALENDAR LINK</h1></a>
         <div>
           <h1 className="text-2xl font-bold mb-4 ml-20">Календарь бронирования</h1>
 
-          <Calendar
-            onChange={(value: Date) => setDate(value)}
-            value={date}
-            className="ml-20"
-            tileClassName={tileClassName}
-          />
-        </div>
+
+         <MyCalendar></MyCalendar>
+          </div>
 
         <div className="flex flex-col gap-10">
           <p className="mt-4">
