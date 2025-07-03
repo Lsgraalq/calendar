@@ -1,44 +1,59 @@
-// app/users/page.tsx
+"use client";
+
+import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
 import Link from "next/link";
-import Navbar from "../../components/Navbar";
-type User = {
-  uid: string;
-  displayName: string;
-  email: string;
-  role?: string;
-};
 
-export default async function UsersPage() {
-  const usersSnapshot = await getDocs(collection(db, "users"));
+export default function UsersPage() {
+  const [users, setUsers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const users: User[] = usersSnapshot.docs.map((doc) => ({
-    uid: doc.id,
-    ...doc.data(),
-  })) as User[];
+  useEffect(() => {
+    async function fetchUsers() {
+      try {
+        const snapshot = await getDocs(collection(db, "users"));
+        const usersData = snapshot.docs.map(doc => ({
+          uid: doc.id,
+          ...doc.data(),
+        }));
+        setUsers(usersData);
+      } catch (err) {
+        console.error(err);
+        setError("❌ Ошибка загрузки пользователей");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchUsers();
+  }, []);
 
   return (
-    <>
-    
-    <div className="pt-32 ml-64">
-      <h1 className="text-2xl font-bold mb-6">Пользователи</h1>
-      <ul className="space-y-4">
-        {users.map((user) => (
-          <li key={user.uid} className="p-4 border rounded-md shadow-sm">
-            <p><strong>Name</strong> {user.displayName}</p>
-            {/* <p><strong>Email:</strong> {user.email}</p>
-            <p><strong>Роль:</strong> {user.role ?? "Не указана"}</p> */}
-            <Link
-              className="text-blue-500 underline mt-2 inline-block"
-              href={`/profile/${user.uid}`}
-            >
-              Profile
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
-    </>
+    <div className="min-h-screen pt-20 md:pt-32 md:ml-64">
+  <h1 className="text-2xl font-bold mb-6 pl-2 md:pl-10">Benutzer</h1>
+  {loading && <p>Lade...</p>}
+  {error && <p className="text-red-500">{error}</p>}
+  <ul className="space-y-4 px-4 grid grid-cols-2 gap-2">
+    {users.map((user) => (
+      <li
+        key={user.uid}
+        className="p-4 border rounded-md shadow-sm bg-gradient-to-b from-white to-purple-100"
+      >
+        <p>
+          <strong className="font-bold text-purple-500">Name:</strong> {user.displayName}
+        </p>
+        <Link
+          className="text-blue-800 underline mt-2 inline-block"
+          href={`/profile/${user.uid}`}
+        >
+          Profil
+        </Link>
+      </li>
+    ))}
+  </ul>
+</div>
+
   );
 }

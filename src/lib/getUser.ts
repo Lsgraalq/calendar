@@ -24,3 +24,5 @@ export async function getUser(uid: string) {
 
   return docSnap.data();
 }
+
+

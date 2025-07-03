@@ -6,8 +6,8 @@ type Equipment = {
   id: string;
   name: string;
   description?: string;
-  image?: string;
-  photoPath?: string;
+  image: string;
+  photoPath: string;
 };
 
 export const fetchEquipment = async (): Promise<Equipment[]> => {

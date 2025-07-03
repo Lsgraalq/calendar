@@ -6,7 +6,7 @@ import { createUserDocument } from "@/lib/createUserDocument"
 import Link from "next/link";
 const provider = new GoogleAuthProvider();
 
-export default function LoginButton() {
+export default function RegisterButton() {
   const handleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
@@ -20,7 +20,7 @@ export default function LoginButton() {
   };
 
   return (
-  <Link href="/login">
-  <button  className="px-7 pt-2.5 pb-2.5 rounded-full bg-purple-300 text-center text-white font-bold">Log in</button>
+  <Link href="/signup">
+  <button  className="px-7 pt-2.5 pb-2.5 rounded-full bg-purple-300 text-center text-white font-bold">Register</button>
   </Link> )
 }

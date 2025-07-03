@@ -1,41 +1,66 @@
-import { auth } from "@/firebase/firebaseConfig";
-import Navbar from "../../../components/Navbar";
-import { getUser } from "@/lib/getUser";
+"use client";
 
+import { useEffect, useState } from "react";
+import { getUser } from "@/lib/getUser"; 
+import { useParams } from "next/navigation";
 
-type Props = {
-  params: {
-    uid: string;
-  };
+type User = {
+  displayName: string;
+  email: string;
 };
 
-export default async function ProfilePage({ params }: Props) {
-  const { uid } = await params;
-  const user = await getUser(uid);
-    console.log("uid from URL:", uid);
-    console.log("user from Firestore:", user);
+export default function ProfilePage() {
+  const params = useParams();
+  const uid = params?.uid as string;
 
-  try {
-    const user = await getUser(uid);
+  const [user, setUser] = useState<User | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const fetchedUser = await getUser(uid);
+        if (!fetchedUser) {
+          throw new Error("Benutzer nicht gefunden");
+        }
+        setUser(fetchedUser);
+      } catch (err) {
+        setError("Benutzer nicht gefunden.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (uid) {
+      fetchUser();
+    } else {
+      setError("Ungültige UID.");
+      setLoading(false);
+    }
+  }, [uid]);
+
+  if (loading) {
     return (
-        <>
-        
       <div className="pt-20 px-5 sm:ml-70 md:text-2xl">
-        <h1 className="text-2xl font-bold">Users profile</h1>
-        <p><strong>Name: </strong> {user.displayName}</p>
-        <p><strong>Email: </strong> {user.email}</p>
+        <p>Lädt...</p>
       </div>
-      </>
-    );
-  } catch (error) {
-    
-    return (
-        <>
-        
-      <div className="pt-20 px-5 sm:ml-70 md:text-2xl text-red-500">
-        <p>Пользователь не найден.</p>
-      </div>
-      </>
     );
   }
+
+  if (error) {
+    return (
+      <div className="pt-20 px-5 sm:ml-70 md:text-2xl text-red-500">
+        <p>{error}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="pt-20 px-5 sm:ml-70 md:text-2xl">
+      <h1 className="text-2xl font-bold">Benutzerprofil</h1>
+      <p><strong>Name:</strong> {user?.displayName}</p>
+      <p><strong>E-Mail:</strong> {user?.email}</p>
+    </div>
+  );
 }
