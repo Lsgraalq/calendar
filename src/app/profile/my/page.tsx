@@ -5,6 +5,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/firebase/firebaseConfig";
 import { getUser } from "@/lib/getUser";
 import { updateUser } from "@/lib/updateUser";
+import { useRouter } from "next/navigation";
+import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 type User = {
   displayName: string;
@@ -18,7 +20,7 @@ export default function MeinProfilSeite() {
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [saving, setSaving] = useState(false);
-
+  const router = useRouter();
   const fetchUserData = async (uid: string) => {
   try {
     const fetchedUser = await getUser(uid) as User;
@@ -44,6 +46,11 @@ export default function MeinProfilSeite() {
     });
     return () => unsubscribe();
   }, []);
+
+  const logout = async () => {
+          await signOut(auth);
+          router.push("/login"); // редирект на главную
+      };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,6 +101,9 @@ export default function MeinProfilSeite() {
           {saving ? "Speichert..." : "Speichern"}
         </button>
       </form>
+      <div className="mt-25">
+      <button className=" text-white bg-purple-600 w-60 mx-auto rounded-2xl pt-2 pb-2"onClick={logout}>Log out</button>
+      </div>
     </div>
   );
 }

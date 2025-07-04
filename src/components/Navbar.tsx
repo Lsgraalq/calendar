@@ -78,7 +78,7 @@ function Navbar() {
                         <FaUserAlt className='w-8 align-middle mt-1 text-purple-400'/>
                     </div>
                     <div className="text-lg text-purple-400">
-                        <Link href={`/profile/${user.uid}`}>
+                        <Link href={`/profile/my`}>
                         <p>Profile</p>
                         </Link>
                     </div>
