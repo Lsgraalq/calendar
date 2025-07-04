@@ -241,7 +241,7 @@ function Navbar() {
                 </div> */}
                 <div className=" flex gap-5">
                     <LoginButton ></LoginButton>
-                     <RegisterButton></RegisterButton>
+                     
                 </div>
                 {/*  */}
             </div>
