@@ -20,18 +20,18 @@ export default function MeinProfilSeite() {
   const [saving, setSaving] = useState(false);
 
   const fetchUserData = async (uid: string) => {
-    try {
-      const fetchedUser = await getUser(uid);
-      if (!fetchedUser) throw new Error("Benutzer nicht gefunden");
-      setUser(fetchedUser);
-      setDisplayName(fetchedUser.displayName);
-      setEmail(fetchedUser.email);
-    } catch {
-      setError("Fehler beim Laden der Benutzerdaten");
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    const fetchedUser = await getUser(uid) as User;
+    if (!fetchedUser) throw new Error("Benutzer nicht gefunden");
+    setUser(fetchedUser);
+    setDisplayName(fetchedUser.displayName);
+    setEmail(fetchedUser.email);
+  } catch {
+    setError("Fehler beim Laden der Benutzerdaten");
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
