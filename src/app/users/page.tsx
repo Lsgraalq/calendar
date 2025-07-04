@@ -39,7 +39,7 @@ export default function UsersPage() {
     {users.map((user) => (
       <li
         key={user.uid}
-        className="p-4 border rounded-md shadow-sm bg-gradient-to-b from-white to-purple-100"
+        className="p-4 border rounded-md shadow-sm bg-gradient-to-b from-purple-100 to-purple-200 border-2 border-gray-200"
       >
         <p>
           <strong className="font-bold text-purple-500">Name:</strong> {user.displayName}

@@ -68,9 +68,9 @@ export default function RegisterSection() {
          
           Register
         </a>
-        <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0   signup-class">
+        <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0   ">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl text-white ">
+            <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl  text-purple-600">
               Create an account
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleRegister}>

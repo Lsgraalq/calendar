@@ -9,7 +9,8 @@ import { collection, addDoc, onSnapshot, query, DocumentData } from 'firebase/fi
 import { db } from '@/firebase/firebaseConfig';
 import { fetchEquipment } from '@/utils/fetchEquipment';
 import { EventInput } from '@fullcalendar/core';
-
+import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
 // ====== Типы данных ======
 
 // Тип для объекта техники из Firestore
@@ -28,6 +29,7 @@ type EventType = 'event' | 'note' | 'booking';
 interface CalendarEvent extends EventInput {
   id: string;
   type: EventType;
+  description?: string;
   equipmentId?: string;
   equipmentName?: string;
 }
@@ -47,6 +49,7 @@ export default function CalendarPage() {
     title: '',
     start: '',
     end: '',
+    description: '',
     type: 'event' as EventType,
     equipmentId: '',
   });
@@ -70,6 +73,7 @@ export default function CalendarPage() {
           start: data.start,
           end: data.end,
           type: data.type,
+          description: data.description,
           equipmentId: data.equipmentId,
           color:
             data.type === 'booking' ? 'blue'
@@ -116,6 +120,7 @@ export default function CalendarPage() {
         start: formData.start,
         end: formData.end || formData.start,
         type: formData.type,
+        description: formData.description,
         equipmentId: formData.equipmentId || null,
         equipmentName: selectedEquipment?.name || null,
       });
@@ -125,6 +130,7 @@ export default function CalendarPage() {
         title: '',
         start: '',
         end: '',
+        description:'',
         type: 'event',
         equipmentId: '',
       });
@@ -142,8 +148,8 @@ export default function CalendarPage() {
 
   // ====== JSX разметка ======
   return (
-  <div className="min-h-screen bg-gradient-to-b from-white to-purple-200 px-5 md:ml-64 md:pt-10">
-  <div className='mt-20 flex flex-col-reverse  md:flex-row'>
+  <div className="min-h-screen bg-white px-5 md:ml-64 md:pt-10">
+  <div className='pt-20 flex flex-col-reverse  md:flex-row'>
     {/* Левая панель: форма */}
     <div className='text'>
       <h3 className='text-xl text-left font-bold pt-2 pb-5'>Ereignis hinzufügen</h3>
@@ -171,6 +177,19 @@ export default function CalendarPage() {
             type="text"
             name="title"
             value={formData.title}
+            onChange={handleChange}
+            required
+            className='rounded-full max-w-xs md:max-w-[50vh] text-gray-600 px-4 py-2 '
+          />
+          </div>
+
+          {/* description */}
+          <div className='flex flex-col text-left pb-4'>
+          <label className='text-xl pl-3'>Beschreibung</label>
+          <input
+            type="text"
+            name="description"
+            value={formData.description}
             onChange={handleChange}
             required
             className='rounded-full max-w-xs md:max-w-[50vh] text-gray-600 px-4 py-2 '
@@ -242,6 +261,17 @@ export default function CalendarPage() {
       initialView="dayGridMonth"
       events={events}
       height="auto"
+      eventDidMount={(info) => {
+    if (info.event.extendedProps.description) {
+      tippy(info.el, {
+        content: info.event.extendedProps.description,
+        placement: 'top',
+        theme: 'light-border',
+        arrow: true,
+        delay: [100, 0]
+      });
+    }
+  }}
     />
   )}
 </div>

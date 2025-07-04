@@ -55,7 +55,7 @@ function Navbar() {
 
     return (
       <>
-      <nav className="fixed top-0 z-50 w-full bg-white  text-white border-b-2 border-gray-300">
+      <nav className="fixed top-0 z-50 w-full bg-white  text-white border-b-2 border-purple-200">
   <div className="px-3 py-3 lg:px-5 lg:pl-3 text-white ">
     <div className="flex items-center justify-between">
       <div className="flex items-center justify-start rtl:justify-end">
@@ -122,9 +122,9 @@ function Navbar() {
 
 <aside id="logo-sidebar" className={`
     fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform
-    ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}  sm:translate-x-0 bg-[#ffffff]  border-r-3 border-purple-100
+    ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}  sm:translate-x-0 bg-purple-100  border-r-3 border-purple-200
   `}>
-   <div className="h-full px-3 pb-4 overflow-y-auto bg-gradient-to-b from-white to-purple-300 ">
+   <div className="h-full px-3 pb-4 overflow-y-auto bg-gradient-to-b from-purple-100 to-purple-300 ">
       <ul className="space-y-2 font-medium">
          <li>
             <a href="/" className="flex items-center p-2 text-white rounded-lg  hover:bg-purple-200">
