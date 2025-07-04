@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
-import { db, storage } from "@/firebase/firebaseConfig"; // storage надо импортировать из своей конфигурации
+import { db, storage } from "@/firebase/firebaseConfig"; // storage muss aus deiner Konfiguration importiert werden
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function AddEquipment() {
@@ -21,48 +21,47 @@ export default function AddEquipment() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!imageFile) {
-      setMessage("❌ Пожалуйста, выберите изображение");
+      setMessage("❌ Bitte wählen Sie ein Bild aus");
       return;
     }
     try {
-      // Создаём ссылку на место в storage для файла
+      // Erstelle einen Speicherpfad für die Datei
       const storageRef = ref(storage, `images/${imageFile.name}`);
-      console.log("Will upload to path:", `images/${imageFile.name}`);
+      console.log("Wird hochgeladen zu Pfad:", `images/${imageFile.name}`);
 
-
-      // Загружаем файл
+      // Lade die Datei hoch
       await uploadBytes(storageRef, imageFile);
 
-      // Получаем публичный URL загруженного файла
+      // Hole die öffentliche URL der hochgeladenen Datei
       const imageUrl = await getDownloadURL(storageRef);
 
-      // Добавляем документ в Firestore с ссылкой на картинку
+      // Füge ein Dokument in Firestore mit dem Bildlink hinzu
       await addDoc(collection(db, "equipment"), {
         name,
         type,
         description,
-        imageUrl, // сохраняем ссылку на картинку
+        imageUrl, // Bildlink speichern
         createdAt: Timestamp.now(),
       });
 
-      setMessage("✅ Техника успешно добавлена");
+      setMessage("✅ Gerät erfolgreich hinzugefügt");
       setName("");
       setType("");
       setDescription("");
       setImageFile(null);
     } catch (error) {
-      console.error("Ошибка при добавлении техники:", error);
-      setMessage("❌ Ошибка при добавлении техники");
+      console.error("Fehler beim Hinzufügen des Geräts:", error);
+      setMessage("❌ Fehler beim Hinzufügen des Geräts");
     }
   };
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 rounded-xl shadow">
-      <h1 className="text-xl font-bold mb-4">Добавить технику</h1>
+      <h1 className="text-xl font-bold mb-4">Gerät hinzufügen</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
-          placeholder="Название"
+          placeholder="Name"
           className="w-full border p-2 text-black rounded"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -70,14 +69,14 @@ export default function AddEquipment() {
         />
         <input
           type="text"
-          placeholder="Тип (например, камера)"
+          placeholder="Typ (z.B. Kamera)"
           className="w-full border p-2 text-black rounded"
           value={type}
           onChange={(e) => setType(e.target.value)}
           required
         />
         <textarea
-          placeholder="Описание"
+          placeholder="Beschreibung"
           className="w-full border p-2 text-black rounded"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
@@ -87,7 +86,7 @@ export default function AddEquipment() {
           type="submit"
           className="bg-blue-600 text-white px-4 py-2 rounded"
         >
-          Добавить
+          Hinzufügen
         </button>
         {message && <p className="text-sm mt-2">{message}</p>}
       </form>

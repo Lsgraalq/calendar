@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import LoginButton from './loginButton';
 import { FaUserAlt } from "react-icons/fa";
 import RegisterButton from './registerButton';
-
+import { MdRoomPreferences } from "react-icons/md";
 function Navbar() {
     const [user, loading, error] = useAuthState(auth);
     const router = useRouter();
@@ -66,7 +66,7 @@ function Navbar() {
             </svg>
          </button>
         <a href="/" className="flex ms-2 md:me-24">
-          <span className="self-center text-xl font-semibold sm:text-2xl uppercasewhitespace-nowrap text-purple-600">Passage</span>
+          <span className="self-center text-xl font-semibold sm:text-2xl uppercasewhitespace-nowrap text-purple-600">Mediaraum</span>
         </a>
       </div>
       <div className="flex items-center">
@@ -143,6 +143,12 @@ function Navbar() {
                <span className="ms-3 text-purple-500">Ausrüstung</span>
             </a>
          </li>
+          <li>
+            <a href="/rooms" className="flex items-center p-2 text-white rounded-lg  hover:bg-purple-200">
+              <MdRoomPreferences className='w-5' color='purple'></MdRoomPreferences>
+               <span className="ms-3 text-purple-500">Rooms</span>
+            </a>
+         </li>
          {/* <li>
             <a href="#" className="flex items-center p-2 text-white rounded-lg  hover:bg-purple-200">
                
@@ -213,7 +219,7 @@ function Navbar() {
             </svg>
          </button>
         <a href="/" className="flex ms-2 md:me-24">
-          <span className="self-center text-xl font-semibold sm:text-2xl uppercasewhitespace-nowrap text-purple-600">Passage</span>
+          <span className="self-center text-xl font-semibold sm:text-2xl uppercasewhitespace-nowrap text-purple-600">Mediaraum</span>
         </a>
       </div>
       <div className="flex items-center">
