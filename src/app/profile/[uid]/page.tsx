@@ -18,19 +18,30 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const fetchedUser = await getUser(uid);
-        if (!fetchedUser) {
-          throw new Error("Benutzer nicht gefunden");
-        }
-        setUser(fetchedUser);
-      } catch (err) {
-        setError("Benutzer nicht gefunden.");
-      } finally {
-        setLoading(false);
-      }
+   const fetchUser = async () => {
+  try {
+    const fetchedUserData = await getUser(uid);
+
+    if (!fetchedUserData) {
+      throw new Error("Benutzer nicht gefunden");
+    }
+
+    if (!fetchedUserData.displayName || !fetchedUserData.email) {
+      throw new Error("Unvollständige Benutzerdaten");
+    }
+
+    const user: User = {
+      displayName: fetchedUserData.displayName,
+      email: fetchedUserData.email
     };
+
+    setUser(user);
+  } catch (err) {
+    setError("Benutzer nicht gefunden.");
+  } finally {
+    setLoading(false);
+  }
+};
 
     if (uid) {
       fetchUser();
