@@ -143,12 +143,12 @@ function Navbar() {
                <span className="ms-3 text-purple-500">Ausrüstung</span>
             </a>
          </li>
-          <li>
+          {/* <li>
             <a href="/rooms" className="flex items-center p-2 text-white rounded-lg  hover:bg-purple-200">
               <MdRoomPreferences className='w-5' color='purple'></MdRoomPreferences>
                <span className="ms-3 text-purple-500">Rooms</span>
             </a>
-         </li>
+         </li> */}
          {/* <li>
             <a href="#" className="flex items-center p-2 text-white rounded-lg  hover:bg-purple-200">
                
