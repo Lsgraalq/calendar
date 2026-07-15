@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# calendar — equipment booking tool
 
-## Getting Started
+> **Created: June 2025** — commercial project (booking / scheduling tool).
 
-First, run the development server:
+A **booking and scheduling web app** for managing shared equipment — users can reserve items on a calendar, add notes and events, and manage an equipment catalog. Built as a commercial tool with a modern **Next.js + Firebase** stack.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Features
+
+- 📅 **Interactive calendar** built on [FullCalendar](https://fullcalendar.io/) (day grid, time grid, and interaction plugins) with three entry types: **events**, **notes**, and **bookings**.
+- 🛠️ **Equipment management** — list, view details, and add equipment; bookings can be tied to specific equipment.
+- 🔐 **Authentication** — email/password sign-up and login via Firebase Auth, with protected routes and redirects.
+- 👤 **User profiles** — personal profile page, public profiles by UID, and a users directory.
+- ☁️ **Realtime data** with Cloud Firestore (`onSnapshot`) and file storage via Firebase Storage.
+- 🛡️ **Firebase App Check** (reCAPTCHA v3) for abuse protection.
+- 💡 Tooltips (Tippy.js), icons (react-icons), and Flowbite/Tailwind UI.
+
+## Tech stack
+
+- **Next.js 15** (App Router) + **React 19** + **TypeScript**
+- **Firebase** — Auth, Firestore, Storage, App Check
+- **FullCalendar**, react-calendar
+- **Tailwind CSS 4**, Flowbite, Tippy.js, react-icons
+
+## Project structure
+
+| Path                     | Purpose |
+|--------------------------|---------|
+| `src/app/calendar/`      | Main calendar page. |
+| `src/app/equipment/`     | Equipment list, detail (`[id]`), and add pages. |
+| `src/app/profile/`       | Own profile and public profiles (`[uid]`). |
+| `src/app/login`, `signup`| Auth pages. |
+| `src/app/users/`         | Users directory. |
+| `src/components/`         | Calendar, Navbar, auth buttons. |
+| `src/firebase/`          | Firebase config + App Check init. |
+| `src/lib/`, `src/utils/` | User document helpers and data fetching. |
+
+## Getting started
+
+Create a `.env.local` with your Firebase credentials:
+
+```
+NEXT_PUBLIC_FIREBASE_API_KEY=...
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=...
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=...
+NEXT_PUBLIC_FIREBASE_APP_ID=...
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open http://localhost:3000.
